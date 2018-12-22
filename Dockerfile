@@ -10,7 +10,7 @@ RUN apk upgrade --update && \
 
 RUN cabal update
 
-RUN cabal install pandoc-crossref pandoc-citeproc --verbose=3
+RUN cabal install pandoc-crossref pandoc-citeproc
 
 # Create Pandoc build space
 RUN mkdir -p /sundials-build
