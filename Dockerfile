@@ -2,7 +2,7 @@ FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
 ENV PERSISTENT_DEPS clang python3 valgrind ruby
-ENV BUILD_DEPS alpine-sdk ghc cabal cmake zlib
+ENV BUILD_DEPS alpine-sdk ghc cabal cmake zlib zlib-dev
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
