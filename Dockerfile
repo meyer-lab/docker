@@ -8,11 +8,9 @@ RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
 
-ENV PANDOC_VERSION 2.5
-
 RUN cabal update
 
-RUN cabal install pandoc-crossref pandoc-citeproc pandoc-$PANDOC_VERSION --verbose=3
+RUN cabal install pandoc-crossref pandoc-citeproc --verbose=3
 
 # Create Pandoc build space
 RUN mkdir -p /sundials-build
