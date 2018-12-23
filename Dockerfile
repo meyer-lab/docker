@@ -1,7 +1,7 @@
 FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
-ENV PERSISTENT_DEPS clang python3 valgrind zlib make git freetype
+ENV PERSISTENT_DEPS clang python3 valgrind zlib make git freetype openblas lapack
 ENV BUILD_DEPS alpine-sdk cmake python3-dev freetype-dev
 
 RUN apk upgrade --update && \
@@ -25,8 +25,10 @@ WORKDIR /
 
 RUN rm -rf /sundials-build
 
-RUN pip3 install --upgrade pip
+RUN pip3 install --no-cache-dir --upgrade pip
 
-RUN pip3 install --no-cache-dir numpy scipy hypothesis matplotlib seaborn tensorly
+RUN pip3 install --no-cache-dir numpy scipy
+
+RUN pip3 install --no-cache-dir hypothesis matplotlib seaborn tensorly
 
 RUN apk del .build-deps
