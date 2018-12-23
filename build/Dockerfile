@@ -29,6 +29,6 @@ RUN rm -rf /sundials-build
 
 RUN pip3 install --no-cache-dir --upgrade pip
 
-RUN pip3 install --no-cache-dir hypothesis matplotlib seaborn tensorly numba
+RUN pip3 install --no-cache-dir --prefer-binary hypothesis matplotlib seaborn tensorly numba
 
 RUN apk del .build-deps
