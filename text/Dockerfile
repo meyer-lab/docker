@@ -21,8 +21,8 @@ RUN apk del .build-deps && \
 	rm -Rf /root/.cabal /root/.ghc
 
 RUN adduser -D jenkins
+RUN passwd -u jenkins
 USER jenkins
-RUN passwd -u
 
 # Install tinytex
 RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
