@@ -2,7 +2,7 @@ FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
 ENV PERSISTENT_DEPS python3 texlive-xetex biber make git
-ENV BUILD_DEPS ghc cabal
+ENV BUILD_DEPS ghc cabal wget
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
