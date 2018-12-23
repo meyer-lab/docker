@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'python3 --version'
                 sh 'clang --version'
-                sh 'du -hxd 2 /'
+                sh 'du -hxd 4 /'
             }
         }
     }
