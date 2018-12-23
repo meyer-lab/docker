@@ -3,7 +3,7 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS python3 make git wget zlib perl
+ENV PERSISTENT_DEPS python3 make git wget zlib perl shadow
 ENV BUILD_DEPS build-base ghc cabal zlib-dev
 
 RUN apk upgrade --update && \
