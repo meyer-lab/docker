@@ -20,7 +20,7 @@ RUN pip3 install --no-cache-dir --upgrade pip && \
 RUN apk del .build-deps && \
 	rm -Rf /root/.cabal /root/.ghc
 
-RUN adduser --group jenkins
+RUN adduser jenkins
 USER jenkins
 
 # Install tinytex

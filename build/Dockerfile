@@ -35,5 +35,5 @@ RUN pip3 install --no-cache-dir --prefer-binary hypothesis matplotlib seaborn te
 
 RUN apk del .build-deps
 
-RUN adduser --group jenkins
+RUN adduser jenkins
 USER jenkins
