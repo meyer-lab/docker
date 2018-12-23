@@ -1,12 +1,15 @@
-pipeline {
-    agent { dockerfile true }
-    stages {
-        stage('Test') {
-            steps {
-                sh 'python3 --version'
-                sh 'clang --version'
-                sh 'du -hxd 4 /'
-            }
-        }
+node {
+    checkout scm
+
+    def buildImage = docker.build("build:${env.BUILD_ID}", "build/")
+
+    buildImage.inside {
+        sh 'du -hxd 3 /'
+    }
+
+    def textImage = docker.build("text:${env.BUILD_ID}", "text/")
+
+    textImage.inside {
+        sh 'du -hxd 3 /'
     }
 }

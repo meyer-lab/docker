@@ -1,0 +1,19 @@
+FROM alpine:3.8
+MAINTAINER Aaron S Meyer
+
+ENV PERSISTENT_DEPS python3 texlive-xetex biber make git
+ENV BUILD_DEPS ghc cabal
+
+RUN apk upgrade --update && \
+    apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
+    apk add --no-cache --virtual .build-deps $BUILD_DEPS
+
+# Install Pandoc
+RUN cabal update && \
+	cabal install pandoc pandoc-citeproc pandoc-crossref
+
+RUN pip3 install --no-cache-dir --upgrade pip && \
+	pip3 install --no-cache-dir pandocfilters
+
+RUN apk del .build-deps && \
+	rm -Rf /root/.cabal /root/.ghc
