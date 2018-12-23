@@ -1,8 +1,8 @@
 FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
-ENV PERSISTENT_DEPS python3 make git wget
-ENV BUILD_DEPS build-base ghc cabal
+ENV PERSISTENT_DEPS python3 make git wget zlib
+ENV BUILD_DEPS build-base ghc cabal zlib-dev
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
