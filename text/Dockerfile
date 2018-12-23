@@ -1,8 +1,8 @@
 FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
-ENV PERSISTENT_DEPS python3 texlive-xetex biber make git
-ENV BUILD_DEPS ghc cabal wget
+ENV PERSISTENT_DEPS python3 make git wget
+ENV BUILD_DEPS build-base ghc cabal
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
@@ -17,3 +17,6 @@ RUN pip3 install --no-cache-dir --upgrade pip && \
 
 RUN apk del .build-deps && \
 	rm -Rf /root/.cabal /root/.ghc
+
+# Install tinytex
+RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
