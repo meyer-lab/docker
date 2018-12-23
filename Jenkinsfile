@@ -6,13 +6,13 @@ pipeline {
                 stage('build') {
                     agent { dockerfile { dir 'build' } }
                     steps {
-                        sh 'du -hxd 3 /'
+                        sh 'echo Done'
                     }
                 }
                 stage('text') {
                     agent { dockerfile { dir 'text' } }
                     steps {
-                        sh 'du -hxd 3 /'
+                        sh 'echo Done'
                     }
                 }
             }
