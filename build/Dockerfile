@@ -18,7 +18,9 @@ RUN wget https://computation.llnl.gov/projects/sundials/download/sundials-4.0.1.
 WORKDIR /sundials-build/sundials-4.0.1
 RUN mkdir -p build
 WORKDIR /sundials-build/sundials-4.0.1/build
-RUN cmake .. -DBUILD_SHARED_LIBS=ON -DBUILD_ARKODE=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF -DCMAKE_C_FLAGS="-O3 -mtune=native" -DEXAMPLES_ENABLE_C=OFF
+RUN cmake .. -DBUILD_SHARED_LIBS=ON \
+	-DBUILD_ARKODE=OFF -DBUILD_IDAS=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF \
+	-DCMAKE_C_FLAGS="-O3 -mtune=native" -DEXAMPLES_ENABLE_C=OFF
 RUN make && make install
 
 WORKDIR /
