@@ -1,14 +1,14 @@
 FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
-ENV PERSISTENT_DEPS clang python3 valgrind zlib make git freetype openblas
-ENV BUILD_DEPS alpine-sdk cmake python3-dev freetype-dev openblas-dev
+ENV PERSISTENT_DEPS clang python3 valgrind make git freetype openblas
+ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
 
-# Create Pandoc build space
+# Create sundials build space
 RUN mkdir -p /sundials-build
 WORKDIR /sundials-build
 
