@@ -2,7 +2,7 @@ FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
 ENV PERSISTENT_DEPS clang python3 valgrind zlib make git freetype openblas lapack
-ENV BUILD_DEPS alpine-sdk cmake python3-dev freetype-dev
+ENV BUILD_DEPS alpine-sdk cmake python3-dev freetype-dev openblas-dev lapack-dev
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
