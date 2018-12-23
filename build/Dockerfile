@@ -1,7 +1,7 @@
 FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
-ENV PERSISTENT_DEPS clang python3 valgrind make git freetype openblas
+ENV PERSISTENT_DEPS clang musl-dev python3 valgrind make git freetype openblas
 ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev
 
 RUN apk upgrade --update && \
