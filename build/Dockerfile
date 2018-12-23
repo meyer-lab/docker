@@ -1,6 +1,8 @@
 FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
+USER root
+
 ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas py3-scipy py3-numpy llvm5
 ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev llvm5-dev
 
@@ -29,6 +31,9 @@ RUN rm -rf /sundials-build
 
 RUN pip3 install --no-cache-dir --upgrade pip
 
-RUN pip3 install --no-cache-dir --prefer-binary hypothesis matplotlib seaborn tensorly numba
+RUN pip3 install --no-cache-dir --prefer-binary hypothesis matplotlib seaborn tensorly
 
 RUN apk del .build-deps
+
+RUN usermod -G users -a jenkins
+USER jenkins

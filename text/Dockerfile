@@ -1,7 +1,9 @@
 FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
-ENV PERSISTENT_DEPS python3 make git wget zlib
+USER root
+
+ENV PERSISTENT_DEPS python3 make git wget zlib perl
 ENV BUILD_DEPS build-base ghc cabal zlib-dev
 
 RUN apk upgrade --update && \
@@ -17,6 +19,9 @@ RUN pip3 install --no-cache-dir --upgrade pip && \
 
 RUN apk del .build-deps && \
 	rm -Rf /root/.cabal /root/.ghc
+
+RUN usermod -G users -a jenkins
+USER jenkins
 
 # Install tinytex
 RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
