@@ -36,5 +36,4 @@ RUN pip3 install --no-cache-dir --prefer-binary hypothesis matplotlib seaborn te
 RUN apk del .build-deps
 
 RUN adduser -D jenkins
-RUN passwd -u jenkins
 USER jenkins

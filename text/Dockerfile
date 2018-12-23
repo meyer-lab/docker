@@ -21,7 +21,6 @@ RUN apk del .build-deps && \
 	rm -Rf /root/.cabal /root/.ghc
 
 RUN adduser -D jenkins
-RUN passwd -u jenkins
 USER jenkins
 
 # Install tinytex
