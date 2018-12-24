@@ -37,3 +37,7 @@ RUN apk del .build-deps
 
 RUN adduser -D jenkins
 USER jenkins
+
+USER root
+
+RUN du -hxd 2 /

@@ -25,3 +25,7 @@ USER jenkins
 
 # Install tinytex
 RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
+
+USER root
+
+RUN du -hxd 2 /
