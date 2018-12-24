@@ -15,7 +15,7 @@ RUN cabal update && \
 	cabal install pandoc pandoc-citeproc pandoc-crossref
 
 RUN pip3 install --no-cache-dir --upgrade pip && \
-	pip3 install --no-cache-dir pandocfilters
+	pip3 install --no-cache-dir pandocfilters pandoc-mustache
 
 RUN apk del .build-deps && \
 	rm -Rf /root/.cabal /root/.ghc
