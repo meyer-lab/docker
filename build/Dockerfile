@@ -3,12 +3,14 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas py3-scipy py3-numpy hdf5 eigen eigen-dev
-ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev hdf5-dev
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas py3-scipy py3-numpy eigen eigen-dev
+ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
+
+RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing py3-h5py
 
 # Create sundials build space
 RUN mkdir -p /sundials-build
