@@ -31,7 +31,7 @@ RUN rm -rf /sundials-build
 
 RUN pip3 install --no-cache-dir --upgrade pip
 
-RUN pip3 install --no-cache-dir --prefer-binary hypothesis matplotlib seaborn tensorly
+RUN pip3 install --no-cache-dir --prefer-binary hypothesis matplotlib seaborn tensorly pymc3 pandas tqdm
 
 RUN apk del .build-deps
 
