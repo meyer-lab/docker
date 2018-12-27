@@ -3,8 +3,8 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas py3-scipy py3-numpy
-ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas py3-scipy py3-numpy hdf5
+ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev hdf5-dev
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
