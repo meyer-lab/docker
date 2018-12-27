@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:edge
 MAINTAINER Aaron S Meyer
 
 USER root
