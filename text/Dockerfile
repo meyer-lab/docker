@@ -13,6 +13,8 @@ RUN apk upgrade --update && \
 # Install Pandoc
 RUN cabal update && \
 	cabal install pandoc pandoc-citeproc pandoc-crossref
+	
+RUN cp /root/.cabal/bin/* /usr/bin/
 
 RUN pip3 install --no-cache-dir --upgrade pip && \
 	pip3 install --no-cache-dir pandocfilters pandoc-mustache
@@ -27,5 +29,3 @@ USER jenkins
 RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
 
 USER root
-
-RUN du -hxd 2 /
