@@ -1,21 +1,22 @@
-pipeline {
-    agent none
-    stages {
-        stage('Build images') {
-            parallel {
-                stage('build') {
-                    agent { dockerfile { dir 'build' } }
-                    steps {
-                        sh 'echo Done'
-                    }
-                }
-                stage('text') {
-                    agent { dockerfile { dir 'text' } }
-                    steps {
-                        sh 'echo Done'
-                    }
-                }
-            }
+node {
+    checkout scm
+    def textImage = docker.build("text", "./text") 
+    def buildImage = docker.build("build", "./build") 
+
+    textImage.inside {
+        sh 'echo Done'
+    }
+    buildImage.inside {
+        sh 'echo Done'
+    }
+    
+    stage('Push images') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+            textImage.push("${env.BUILD_NUMBER}")
+            textImage.push("latest")
+            
+            buildImage.push("${env.BUILD_NUMBER}")
+            buildImage.push("latest")
         }
     }
 }
