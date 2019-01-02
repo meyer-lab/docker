@@ -16,16 +16,16 @@ RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing py3-
 RUN mkdir -p /sundials-build
 WORKDIR /sundials-build
 
-RUN wget https://computation.llnl.gov/projects/sundials/download/sundials-4.0.1.tar.gz && \
-    tar -xf sundials-4.0.1.tar.gz
+#RUN wget https://computation.llnl.gov/projects/sundials/download/sundials-4.0.1.tar.gz && \
+#    tar -xf sundials-4.0.1.tar.gz
 
-WORKDIR /sundials-build/sundials-4.0.1
-RUN mkdir -p build
-WORKDIR /sundials-build/sundials-4.0.1/build
-RUN cmake .. -DBUILD_SHARED_LIBS=ON \
-	-DBUILD_ARKODE=OFF -DBUILD_IDAS=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF \
-	-DCMAKE_C_FLAGS="-O3 -mtune=native" -DEXAMPLES_ENABLE_C=OFF
-RUN make -j 20 && make install
+#WORKDIR /sundials-build/sundials-4.0.1
+#RUN mkdir -p build
+#WORKDIR /sundials-build/sundials-4.0.1/build
+#RUN cmake .. -DBUILD_SHARED_LIBS=ON \
+#	-DBUILD_ARKODE=OFF -DBUILD_IDAS=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF \
+#	-DCMAKE_C_FLAGS="-O3 -mtune=native" -DEXAMPLES_ENABLE_C=OFF
+#RUN make -j 20 && make install
 
 WORKDIR /
 
