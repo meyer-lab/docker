@@ -1,13 +1,13 @@
-FROM alpine:edge
+FROM alpine:3.8
 MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas py3-scipy py3-numpy eigen eigen-dev
-ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev
+ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev
 
 RUN apk upgrade --update && \
-    apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
+    apk add --no-cache $PERSISTENT_DEPS && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
 
 RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing py3-h5py
@@ -30,6 +30,8 @@ WORKDIR /sundials-build
 WORKDIR /
 
 RUN rm -rf /sundials-build
+
+RUN apk add --no-cache py3-numpy py3-scipy py3-lxml
 
 RUN pip3 install --no-cache-dir --upgrade pip
 
