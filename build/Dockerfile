@@ -3,7 +3,7 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash
 ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev
 
 RUN apk upgrade --update && \
