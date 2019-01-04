@@ -43,5 +43,3 @@ RUN adduser -D jenkins
 USER jenkins
 
 USER root
-
-RUN du -hxd 2 /
