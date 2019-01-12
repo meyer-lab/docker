@@ -3,7 +3,7 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS python3 make git wget zlib perl shadow freetype fontconfig bash aspell aspell-en ruby
+ENV PERSISTENT_DEPS python3 make git wget zlib perl shadow freetype fontconfig bash aspell aspell-en ruby gmp
 ENV BUILD_DEPS build-base ghc cabal zlib-dev
 
 RUN apk upgrade --update && \
@@ -11,7 +11,7 @@ RUN apk upgrade --update && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
 
 # Jekyll things
-RUN gem install bundler
+RUN gem install bundler --no-document
 
 # Install Pandoc
 RUN cabal update && \
