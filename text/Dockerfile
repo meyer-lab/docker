@@ -10,18 +10,17 @@ RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
 
+# Install Pandoc
+RUN cabal update && cabal install pandoc pandoc-citeproc pandoc-crossref --global
+
 # Jekyll things
 RUN gem install bundler --no-document
 
 RUN pip3 install --no-cache-dir --upgrade pip && \
-	pip3 install --no-cache-dir pandocfilters pandoc-mustache
+    pip3 install --no-cache-dir pandocfilters pandoc-mustache
 
 RUN adduser -D jenkins
 USER jenkins
-
-# Install Pandoc
-RUN cabal update && cabal install pandoc pandoc-citeproc pandoc-crossref
-ENV PATH "$PATH:~/.cabal/bin"
 
 # Install tinytex
 RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
