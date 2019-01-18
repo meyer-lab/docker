@@ -29,3 +29,7 @@ RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
 USER root
 
 RUN apk del .build-deps
+
+RUN apk --no-cache add msttcorefonts-installer fontconfig && \
+    update-ms-fonts && \
+    fc-cache -f
