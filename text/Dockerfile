@@ -3,7 +3,7 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS python3 make git wget zlib perl shadow freetype fontconfig bash aspell aspell-en ruby gmp ghostscript
+ENV PERSISTENT_DEPS python3 make git wget zlib perl shadow freetype fontconfig bash aspell aspell-en ruby gmp ghostscript curl openssh
 ENV BUILD_DEPS build-base ghc cabal zlib-dev
 
 RUN apk upgrade --update && \
