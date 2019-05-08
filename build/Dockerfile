@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:edge
 MAINTAINER Aaron S Meyer
 
 USER root
@@ -6,14 +6,12 @@ USER root
 RUN wget https://computation.llnl.gov/projects/sundials/download/sundials-4.1.0.tar.gz && \
     tar -xf sundials-4.1.0.tar.gz
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash py3-h5py
 ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev
 
 RUN apk upgrade --update && \
     apk add --no-cache $PERSISTENT_DEPS && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
-
-RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing py3-h5py
 
 # Create sundials build space
 RUN mkdir -p /sundials-build
