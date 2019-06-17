@@ -1,5 +1,7 @@
 FROM jenkinsci/jenkins:alpine
 
+RUN apk --no-cache add shadow
+
 RUN usermod -u 1024 jenkins
 RUN groupmod -g 100 jenkins
 RUN find / -user 1000 -exec chown -h 1024 {} \;
