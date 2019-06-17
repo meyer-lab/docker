@@ -3,6 +3,8 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
+RUN failcommand
+
 RUN wget https://computation.llnl.gov/projects/sundials/download/sundials-4.1.0.tar.gz && \
     tar -xf sundials-4.1.0.tar.gz
 
