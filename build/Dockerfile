@@ -3,14 +3,17 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl
-ENV BUILD_DEPS cmake freetype-dev openblas-dev
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make wget zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang
+ENV BUILD_DEPS cmake freetype-dev openblas-dev ghc cabal zlib-dev xz python3-dev
 
 RUN apk upgrade --update && \
-    apk add --no-cache $PERSISTENT_DEPS && \
+    apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
 
-RUN pip3 install --no-cache-dir --upgrade pip virtualenv
+# Jekyll things
+RUN gem install bundler --no-document
+
+RUN pip3 install --no-cache-dir --upgrade --prefer-binary pip virtualenv pandocfilters pandoc-mustache pylint
 
 # Build sundials
 RUN mkdir -p /sundials-build
@@ -31,9 +34,20 @@ WORKDIR /
 
 RUN rm -rf /sundials-build
 
-RUN apk del .build-deps
-
 RUN adduser -D jenkins
 USER jenkins
 
+# Install Pandoc
+RUN cabal update && cabal install pandoc pandoc-citeproc pandoc-crossref
+
 USER root
+
+# Install latex
+RUN apk add --no-cache texlive biber texlive-xetex texmf-dist-science
+
+RUN cp /home/jenkins/.cabal/bin/pandoc* /usr/bin/
+RUN rm -rf /home/jenkins/.cabal/lib /home/jenkins/.cabal/packages /home/jenkins/.cabal/bin
+
+RUN apk del .build-deps
+
+RUN update-ms-fonts && fc-cache -f
