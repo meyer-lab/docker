@@ -3,21 +3,21 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-RUN failcommand
-
-RUN wget https://computation.llnl.gov/projects/sundials/download/sundials-4.1.0.tar.gz && \
-    tar -xf sundials-4.1.0.tar.gz
-
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash py3-h5py
-ENV BUILD_DEPS cmake python3-dev freetype-dev openblas-dev py-numpy-dev
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl
+ENV BUILD_DEPS cmake freetype-dev openblas-dev
 
 RUN apk upgrade --update && \
     apk add --no-cache $PERSISTENT_DEPS && \
     apk add --no-cache --virtual .build-deps $BUILD_DEPS
 
-# Create sundials build space
+RUN pip3 install --no-cache-dir --upgrade pip virtualenv
+
+# Build sundials
 RUN mkdir -p /sundials-build
 WORKDIR /sundials-build
+
+RUN wget https://computation.llnl.gov/projects/sundials/download/sundials-4.1.0.tar.gz && \
+    tar -xf sundials-4.1.0.tar.gz
 
 WORKDIR /sundials-build/sundials-4.1.0
 RUN mkdir -p build
@@ -30,12 +30,6 @@ RUN make -j 20 && make install
 WORKDIR /
 
 RUN rm -rf /sundials-build
-
-RUN apk add --no-cache py3-numpy py3-scipy py3-lxml
-
-RUN pip3 install --no-cache-dir --upgrade pip
-
-RUN pip3 install --no-cache-dir --prefer-binary hypothesis matplotlib seaborn tensorly pymc3 pandas tqdm svgutils
 
 RUN apk del .build-deps
 
