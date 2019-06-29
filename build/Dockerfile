@@ -3,12 +3,11 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make wget zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science
-ENV BUILD_DEPS cmake freetype-dev openblas-dev ghc cabal zlib-dev xz python3-dev
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash python3-dev openssl make wget zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science
 
 RUN apk upgrade --update && \
     apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
-    apk add --no-cache --virtual .build-deps $BUILD_DEPS
+    apk add --no-cache --virtual .build-deps cmake freetype-dev openblas-dev ghc cabal zlib-dev xz
 
 # Jekyll things
 RUN gem install bundler --no-document
