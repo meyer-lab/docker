@@ -3,7 +3,7 @@ MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make wget zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make wget zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science
 ENV BUILD_DEPS cmake freetype-dev openblas-dev ghc cabal zlib-dev xz python3-dev
 
 RUN apk upgrade --update && \
@@ -28,24 +28,36 @@ WORKDIR /sundials-build/sundials-4.1.0/build
 RUN cmake .. -DBUILD_SHARED_LIBS=ON \
 	-DBUILD_ARKODE=OFF -DBUILD_IDAS=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF \
 	-DCMAKE_C_FLAGS="-O3 -mtune=native" -DEXAMPLES_ENABLE_C=OFF
-RUN make -j 20 && make install
+RUN make && make install
 
 WORKDIR /
 
 RUN rm -rf /sundials-build
 
-# Install latex
-RUN apk add --no-cache texlive biber texlive-xetex texmf-dist-science
+# Build adept-2
+RUN mkdir -p /adept-build
+WORKDIR /adept-build
 
-RUN cp /home/jenkins/.cabal/bin/pandoc* /usr/bin/
-RUN rm -rf /home/jenkins/.cabal/lib /home/jenkins/.cabal/packages /home/jenkins/.cabal/bin
+RUN wget http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
+    tar -xf adept-2.0.5.tar.gz
+WORKDIR /adept-build/adept-2.0.5
+RUN ./configure "CXXFLAGS=-g -O3" && make && make install
 
-RUN apk del .build-deps
+WORKDIR /
+
+RUN rm -rf /adept-build
+
 
 RUN update-ms-fonts && fc-cache -f
 
-RUN adduser -D jenkins
 USER jenkins
 
 # Install Pandoc
 RUN cabal update && cabal install pandoc pandoc-citeproc pandoc-crossref
+
+# Remove build deps
+USER root
+RUN apk del .build-deps
+RUN cp /home/jenkins/.cabal/bin/pandoc* /usr/bin/
+RUN rm -rf /home/jenkins/.cabal/lib /home/jenkins/.cabal/packages /home/jenkins/.cabal/bin
+USER jenkins
