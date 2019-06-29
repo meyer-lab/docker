@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM jenkins/slave:alpine
 MAINTAINER Aaron S Meyer
 
 USER root
@@ -34,14 +34,6 @@ WORKDIR /
 
 RUN rm -rf /sundials-build
 
-RUN adduser -D jenkins
-USER jenkins
-
-# Install Pandoc
-RUN cabal update && cabal install pandoc pandoc-citeproc pandoc-crossref
-
-USER root
-
 # Install latex
 RUN apk add --no-cache texlive biber texlive-xetex texmf-dist-science
 
@@ -51,3 +43,9 @@ RUN rm -rf /home/jenkins/.cabal/lib /home/jenkins/.cabal/packages /home/jenkins/
 RUN apk del .build-deps
 
 RUN update-ms-fonts && fc-cache -f
+
+RUN adduser -D jenkins
+USER jenkins
+
+# Install Pandoc
+RUN cabal update && cabal install pandoc pandoc-citeproc pandoc-crossref
