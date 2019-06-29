@@ -59,4 +59,7 @@ USER root
 RUN apk del .build-deps
 RUN cp /home/jenkins/.cabal/bin/pandoc* /usr/bin/
 RUN rm -rf /home/jenkins/.cabal/lib /home/jenkins/.cabal/packages /home/jenkins/.cabal/bin
+
+RUN apk add --no-cache openblas-dev lapack lapack-dev
+
 USER jenkins
