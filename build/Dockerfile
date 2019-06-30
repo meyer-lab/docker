@@ -1,18 +1,16 @@
-FROM jenkins/slave:alpine
+FROM jenkins/slave:latest
 MAINTAINER Aaron S Meyer
 
 USER root
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash python3-dev openssl make wget zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash python3-dev openssl make wget zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science freetype-dev openblas-dev lapack
+ENV BUILD_DEPS cmake ghc cabal xz zlib-dev
 
-RUN apk upgrade --update && \
-    apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
-    apk add --no-cache --virtual .build-deps cmake freetype-dev openblas-dev ghc cabal zlib-dev xz
-
-# Jekyll things
-RUN gem install bundler --no-document
-
-RUN pip3 install --no-cache-dir --upgrade --prefer-binary pip virtualenv pandocfilters pandoc-mustache pylint
+RUN apt update && \
+    apt install $PERSISTENT_DEPS $BUILD_DEPS && \
+    update-ms-fonts && fc-cache -f && \
+    gem install bundler --no-document && \
+    pip3 install --no-cache-dir --upgrade --prefer-binary pip virtualenv pandocfilters pandoc-mustache pylint
 
 # Build sundials
 RUN mkdir -p /sundials-build
@@ -47,19 +45,11 @@ WORKDIR /
 RUN rm -rf /adept-build
 
 
-RUN update-ms-fonts && fc-cache -f
-
-USER jenkins
-
 # Install Pandoc
 RUN cabal update && cabal install pandoc pandoc-citeproc pandoc-crossref
 
 # Remove build deps
-USER root
-RUN apk del .build-deps
 RUN cp /home/jenkins/.cabal/bin/pandoc* /usr/bin/
-RUN rm -rf /home/jenkins/.cabal/lib /home/jenkins/.cabal/packages /home/jenkins/.cabal/bin
-
-RUN apk add --no-cache openblas-dev lapack freetype-dev
+RUN rm -rf ~/.cabal/lib ~/.cabal/packages ~/.cabal/bin
 
 USER jenkins
