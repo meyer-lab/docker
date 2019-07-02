@@ -10,7 +10,7 @@ RUN apk upgrade --update && apk add wget && \
     wget http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science freetype-dev openblas-dev python3-dev xz cppunit-dev cppunit
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science freetype-dev openblas-dev python3-dev xz cppunit-dev cppunit g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra py3-scipy py3-numpy py3-virtualenv
 ENV BUILD_DEPS cmake zlib-dev
 
 RUN apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
@@ -39,13 +39,11 @@ RUN rm -rf /home/jenkins/adept* /home/jenkins/sundials*
 RUN apk del .build-deps
 
 # Install Pandoc
-RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1/linux-pandoc_2_7_2.tar.gz
-RUN wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-linux.tar.gz
-RUN tar -C /usr/bin -xf linux-pandoc_2_7_2.tar.gz
-RUN tar -C /usr --strip 1 -xf pandoc-2.7.2-linux.tar.gz
-RUN rm /*.tar.gz
-
-RUN apk add --no-cache g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra py3-scikit-learn py3-virtualenv
+RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1/linux-pandoc_2_7_2.tar.gz && \
+    wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-linux.tar.gz && \
+    tar -C /usr/bin -xf linux-pandoc_2_7_2.tar.gz && \
+    tar -C /usr --strip 1 -xf pandoc-2.7.2-linux.tar.gz && \
+    rm /*.tar.gz
 
 USER jenkins
 WORKDIR /home/jenkins/
