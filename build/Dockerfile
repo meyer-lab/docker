@@ -45,7 +45,7 @@ RUN tar -C /usr/bin -xf linux-pandoc_2_7_2.tar.gz
 RUN tar -C /usr --strip 1 -xf pandoc-2.7.2-linux.tar.gz
 RUN rm /*.tar.gz
 
-RUN apk add --no-cache g++ gfortran file binutils musl-dev cython libstdc++ librsvg
+RUN apk add --no-cache g++ gfortran file binutils musl-dev cython libstdc++ librsvg texmf-dist-fontsextra texmf-dist
 
 USER jenkins
 WORKDIR /home/jenkins/
