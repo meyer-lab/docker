@@ -19,7 +19,7 @@ RUN apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
 # Jekyll, python3 and font things
 RUN gem install bundler --no-document && \
     update-ms-fonts && fc-cache -f && \
-    pip3 install --no-cache-dir --upgrade --prefer-binary pip virtualenv pandocfilters pandoc-mustache
+    pip3 install --no-cache-dir --upgrade --prefer-binary pip pandocfilters pandoc-mustache
 
 # Build sundials
 WORKDIR /home/jenkins/sundials-4.1.0
@@ -45,7 +45,7 @@ RUN tar -C /usr/bin -xf linux-pandoc_2_7_2.tar.gz
 RUN tar -C /usr --strip 1 -xf pandoc-2.7.2-linux.tar.gz
 RUN rm /*.tar.gz
 
-RUN apk add --no-cache g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra
+RUN apk add --no-cache g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra py3-scikit-learn py3-virtualenv
 
 USER jenkins
 WORKDIR /home/jenkins/
