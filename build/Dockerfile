@@ -10,7 +10,7 @@ RUN apk upgrade --update && apk add wget && \
     wget http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science freetype-dev openblas-dev python3-dev xz cppunit-dev cppunit g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra py3-scipy py3-numpy py3-virtualenv
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science freetype-dev openblas-dev python3-dev xz cppunit-dev cppunit g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra
 ENV BUILD_DEPS cmake zlib-dev
 
 RUN apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
@@ -19,7 +19,7 @@ RUN apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
 # Jekyll, python3 and font things
 RUN gem install bundler --no-document && \
     update-ms-fonts && fc-cache -f && \
-    pip3 install --no-cache-dir --upgrade --prefer-binary pip pandocfilters pandoc-mustache setuptools virtualenv
+    pip3 install --no-cache-dir --upgrade pip pandocfilters pandoc-mustache setuptools virtualenv numpy
 
 # Build sundials
 WORKDIR /home/jenkins/sundials-4.1.0
@@ -47,3 +47,9 @@ RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1
 
 USER jenkins
 WORKDIR /home/jenkins/
+
+RUN pip3 install --user scipy && \
+    pip3 install --user pandas && \
+    pip3 install --user matplotlib && \
+    pip3 install --user seaborn && \
+    pip3 install --user scikit-learn
