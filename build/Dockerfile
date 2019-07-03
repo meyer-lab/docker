@@ -19,7 +19,7 @@ RUN apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
 # Jekyll, python3 and font things
 RUN gem install bundler --no-document && \
     update-ms-fonts && fc-cache -f && \
-    pip3 install --no-cache-dir --upgrade --prefer-binary pip pandocfilters pandoc-mustache
+    pip3 install --no-cache-dir --upgrade --prefer-binary pip pandocfilters pandoc-mustache setuptools virtualenv
 
 # Build sundials
 WORKDIR /home/jenkins/sundials-4.1.0
