@@ -48,8 +48,9 @@ RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1
 USER jenkins
 WORKDIR /home/jenkins/
 
-RUN pip3 install --user scipy && \
-    pip3 install --user pandas && \
-    pip3 install --user matplotlib && \
-    pip3 install --user seaborn && \
-    pip3 install --user scikit-learn
+RUN pip3 install --user Cython
+RUN pip3 install --user scipy
+RUN pip3 install --user pandas
+RUN pip3 install --user matplotlib
+RUN pip3 install --user seaborn
+RUN pip3 install --user scikit-learn
