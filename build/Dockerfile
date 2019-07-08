@@ -10,7 +10,7 @@ RUN apk upgrade --update && apk add wget && \
     wget http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science freetype-dev openblas-dev python3-dev xz cppunit-dev cppunit g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra libxml2-dev
+ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer clang texlive biber texlive-xetex texmf-dist-science freetype-dev openblas-dev python3-dev xz cppunit-dev cppunit g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra libxslt-dev libxml2-dev
 ENV BUILD_DEPS cmake zlib-dev
 
 RUN apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
