@@ -27,7 +27,8 @@ RUN mkdir -p build
 WORKDIR /home/jenkins/sundials-4.1.0/build
 RUN cmake .. -DBUILD_SHARED_LIBS=ON \
 	-DBUILD_ARKODE=OFF -DBUILD_IDAS=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF \
-	-DCMAKE_C_FLAGS="-O3" -DEXAMPLES_ENABLE_C=OFF
+	-DCMAKE_C_FLAGS="-O3" -DEXAMPLES_ENABLE_C=OFF \
+	-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib
 RUN make && make install
 
 # Build adept-2
@@ -50,9 +51,5 @@ RUN apk add hdf5-dev --update-cache --repository http://dl-3.alpinelinux.org/alp
 USER jenkins
 WORKDIR /home/jenkins/
 
+RUN pip3 install --user numpy
 RUN pip3 install --user Cython
-RUN pip3 install --user scipy
-RUN pip3 install --user pandas
-RUN pip3 install --user matplotlib
-RUN pip3 install --user seaborn
-RUN pip3 install --user scikit-learn
