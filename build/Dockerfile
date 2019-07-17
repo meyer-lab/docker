@@ -46,7 +46,7 @@ RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1
     tar -C /usr --strip 1 -xf pandoc-2.7.2-linux.tar.gz && \
     rm /*.tar.gz
 
-RUN apk add --no-cache linux-headers zeromq-dev ruby-dev
+RUN apk add --no-cache linux-headers zeromq-dev ruby-dev texmf-dist-langgreek
 RUN apk add hdf5-dev --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
 USER jenkins
