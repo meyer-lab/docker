@@ -46,6 +46,11 @@ RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1
     tar -C /usr --strip 1 -xf pandoc-2.7.2-linux.tar.gz && \
     rm /*.tar.gz
 
+# Install julia
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1.1-linux-x86_64.tar.gz && \
+    tar -C /usr/ -xf julia-1.1.1-linux-x86_64.tar.gz && \
+    rm /*.tar.gz
+
 RUN apk add --no-cache linux-headers zeromq-dev ruby-dev texmf-dist-langgreek
 RUN apk add hdf5-dev --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
