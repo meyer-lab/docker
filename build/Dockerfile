@@ -48,7 +48,7 @@ RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1
 
 # Install julia
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1.1-linux-x86_64.tar.gz && \
-    tar -C /usr/ -xf julia-1.1.1-linux-x86_64.tar.gz && \
+    tar -C /usr/ --strip 1 -xf julia-1.1.1-linux-x86_64.tar.gz && \
     rm /*.tar.gz
 
 RUN apk add --no-cache linux-headers zeromq-dev ruby-dev texmf-dist-langgreek
