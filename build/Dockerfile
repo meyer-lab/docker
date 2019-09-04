@@ -1,25 +1,23 @@
-FROM jenkins/slave:alpine
+FROM jenkins/slave:latest-jdk11
 MAINTAINER Aaron S Meyer
 
 USER root
 
 # Prevent us constantly downloading these
-RUN apk upgrade --update && apk add wget && \
-    wget https://computation.llnl.gov/projects/sundials/download/sundials-4.1.0.tar.gz && \
+RUN wget --quiet https://computation.llnl.gov/projects/sundials/download/sundials-4.1.0.tar.gz && \
     tar -xf sundials-4.1.0.tar.gz && \
-    wget http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
+    wget --quiet http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
-ENV PERSISTENT_DEPS build-base python3 valgrind git freetype openblas eigen eigen-dev bash openssl make zlib perl shadow freetype fontconfig aspell aspell-en ruby gmp ghostscript curl openssh msttcorefonts-installer graphviz texlive biber texlive-xetex findutils texmf-dist-science freetype-dev openblas-dev python3-dev xz cppunit-dev cppunit g++ gfortran file binutils musl-dev cython libstdc++ librsvg ttf-opensans ttf-dejavu texmf-dist-latexextra texmf-dist-bibtexextra libxslt-dev libxml2-dev
-ENV BUILD_DEPS cmake zlib-dev
+RUN sed -i 's/stretch/buster/g' /etc/apt/sources.list
 
-RUN apk add --no-cache --virtual .persistent-deps $PERSISTENT_DEPS && \
-    apk add --no-cache --virtual .build-deps $BUILD_DEPS
+RUN apt-get update && apt -y --no-install-recommends full-upgrade && apt -y autoremove
+
+RUN apt-get install -y --no-install-recommends git-lfs python3 python3-pip python3-dev git bash openssl make fontconfig aspell aspell-en ruby ghostscript curl graphviz libfreetype6-dev pkg-config ttf-dejavu libxslt-dev libxml2-dev libhdf5-dev libzmq3-dev ruby-dev python3-setuptools cmake g++ gcc libopenblas-dev libeigen3-dev gfortran librsvg2-bin libcppunit-dev
 
 # Jekyll, python3 and font things
 RUN gem install bundler --no-document && \
-    update-ms-fonts && fc-cache -f && \
-    pip3 install --no-cache-dir --upgrade pip pandocfilters pandoc-mustache setuptools virtualenv numpy
+    pip3 install --no-cache-dir --upgrade pip pandocfilters pandoc-mustache virtualenv
 
 # Build sundials
 WORKDIR /home/jenkins/sundials-4.1.0
@@ -37,27 +35,23 @@ RUN ./configure "CXXFLAGS=-g -O3" && make && make install
 
 WORKDIR /
 RUN rm -rf /home/jenkins/adept* /home/jenkins/sundials*
-RUN apk del .build-deps
 
 # Install Pandoc
-RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1/linux-pandoc_2_7_2.tar.gz && \
-    wget https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-linux.tar.gz && \
+RUN wget --quiet https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1/linux-pandoc_2_7_2.tar.gz && \
+    wget --quiet https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-linux.tar.gz && \
     tar -C /usr/bin -xf linux-pandoc_2_7_2.tar.gz && \
     tar -C /usr --strip 1 -xf pandoc-2.7.2-linux.tar.gz && \
     rm /*.tar.gz
 
 # Install julia
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1.1-linux-x86_64.tar.gz && \
-    tar -C /usr/ --strip 1 -xf julia-1.1.1-linux-x86_64.tar.gz && \
+RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.2/julia-1.2.0-linux-x86_64.tar.gz && \
+    tar -C /usr/ --strip 1 -xf julia-1.2.0-linux-x86_64.tar.gz && \
     rm /*.tar.gz
-
-RUN apk add --no-cache linux-headers zeromq-dev ruby-dev texmf-dist-langgreek
-RUN apk add hdf5-dev --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
 USER jenkins
 WORKDIR /home/jenkins/
 
-RUN pip3 install --user numpy
-RUN pip3 install --user Cython
-RUN pip3 install --user Theano matplotlib seaborn pandas scikit-learn
-RUN pip3 freeze | xargs pip3 uninstall -y
+RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
+ENV PATH="/home/jenkins/bin:${PATH}"
+
+RUN tlmgr install biblatex biber wrapfig titlesec biblatex-science biblatex-nature mathtools utopia logreq microtype setspace lineno preprint
