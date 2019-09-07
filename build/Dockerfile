@@ -48,10 +48,12 @@ RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.2/julia-1.2.
     tar -C /usr/ --strip 1 -xf julia-1.2.0-linux-x86_64.tar.gz && \
     rm /*.tar.gz
 
+RUN ldconfig
+
 USER jenkins
 WORKDIR /home/jenkins/
 
 RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
-ENV PATH="/home/jenkins/bin:${PATH}"
+ENV PATH="/home/jenkins/.TinyTeX/bin/x86_64-linux:${PATH}"
 
 RUN tlmgr install biblatex biber wrapfig titlesec biblatex-science biblatex-nature mathtools utopia logreq microtype setspace lineno preprint
