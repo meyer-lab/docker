@@ -56,4 +56,4 @@ WORKDIR /home/jenkins/
 RUN wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
 ENV PATH="/home/jenkins/.TinyTeX/bin/x86_64-linux:${PATH}"
 
-RUN tlmgr install biblatex biber wrapfig titlesec biblatex-science biblatex-nature mathtools utopia logreq microtype setspace lineno preprint
+RUN tlmgr install biblatex biber wrapfig titlesec biblatex-science biblatex-nature mathtools utopia logreq microtype setspace lineno preprint type1cm
