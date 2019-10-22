@@ -37,10 +37,10 @@ WORKDIR /
 RUN rm -rf /home/jenkins/adept* /home/jenkins/sundials*
 
 # Install Pandoc
-RUN wget --quiet https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1/linux-pandoc_2_7_2.tar.gz && \
-    wget --quiet https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-linux.tar.gz && \
-    tar -C /usr/bin -xf linux-pandoc_2_7_2.tar.gz && \
-    tar -C /usr --strip 1 -xf pandoc-2.7.2-linux.tar.gz && \
+RUN wget --quiet https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1a/linux-pandoc_2_7_3.tar.gz && \
+    wget --quiet https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-linux.tar.gz && \
+    tar -C /usr/bin -xf linux-pandoc_2_7_3.tar.gz && \
+    tar -C /usr --strip 1 -xf pandoc-2.7.3-linux.tar.gz && \
     rm /*.tar.gz
 
 # Install julia
