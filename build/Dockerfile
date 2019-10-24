@@ -5,7 +5,7 @@ USER root
 
 # Prevent us constantly downloading these
 RUN wget --quiet https://computation.llnl.gov/projects/sundials/download/sundials-5.0.0.tar.gz && \
-    tar -xf sundials-4.1.0.tar.gz && \
+    tar -xf sundials-5.0.0.tar.gz && \
     wget --quiet http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
