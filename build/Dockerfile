@@ -25,13 +25,13 @@ RUN mkdir -p build
 WORKDIR /home/jenkins/sundials-5.0.0/build
 RUN cmake .. -DBUILD_SHARED_LIBS=ON \
 	-DBUILD_ARKODE=OFF -DBUILD_IDAS=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF \
-	-DCMAKE_C_FLAGS="-O3" -DEXAMPLES_ENABLE_C=OFF \
+	-DCMAKE_C_FLAGS="-Ofast" -DEXAMPLES_ENABLE_C=OFF \
 	-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib
 RUN make && make install
 
 # Build adept-2
 WORKDIR /home/jenkins/adept-2.0.5
-RUN ./configure "CXXFLAGS=-g -O3" && make && make install
+RUN ./configure "CXXFLAGS=-g -Ofast" && make && make install
 
 WORKDIR /
 RUN rm -rf /home/jenkins/adept* /home/jenkins/sundials*
@@ -44,8 +44,8 @@ RUN wget --quiet https://github.com/lierdakil/pandoc-crossref/releases/download/
     rm /*.tar.gz
 
 # Install julia
-RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.3/julia-1.3.0-linux-x86_64.tar.gz && \
-    tar -C /usr/ --strip 1 -xf julia-1.3.0-linux-x86_64.tar.gz && \
+RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.3/julia-1.3.1-linux-x86_64.tar.gz && \
+    tar -C /usr/ --strip 1 -xf julia-1.3.1-linux-x86_64.tar.gz && \
     rm /*.tar.gz
 
 RUN ldconfig
