@@ -4,8 +4,8 @@ MAINTAINER Aaron S Meyer
 USER root
 
 # Prevent us constantly downloading these
-RUN wget --quiet https://computation.llnl.gov/projects/sundials/download/sundials-5.0.0.tar.gz && \
-    tar -xf sundials-5.0.0.tar.gz && \
+RUN wget --quiet https://computation.llnl.gov/projects/sundials/download/sundials-5.1.0.tar.gz && \
+    tar -xf sundials-5.1.0.tar.gz && \
     wget --quiet http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
@@ -20,9 +20,9 @@ RUN gem install bundler --no-document && \
     pip3 install --no-cache-dir --upgrade pip pandocfilters pandoc-mustache virtualenv
 
 # Build sundials
-WORKDIR /home/jenkins/sundials-5.0.0
+WORKDIR /home/jenkins/sundials-5.1.0
 RUN mkdir -p build
-WORKDIR /home/jenkins/sundials-5.0.0/build
+WORKDIR /home/jenkins/sundials-5.1.0/build
 RUN cmake .. -DBUILD_SHARED_LIBS=ON \
 	-DBUILD_ARKODE=OFF -DBUILD_IDAS=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF \
 	-DCMAKE_C_FLAGS="-Ofast" -DEXAMPLES_ENABLE_C=OFF \
@@ -56,4 +56,4 @@ WORKDIR /home/jenkins/
 RUN wget  -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
 ENV PATH="/home/jenkins/.TinyTeX/bin/x86_64-linux:${PATH}"
 
-RUN tlmgr install biblatex biber wrapfig titlesec biblatex-science biblatex-nature mathtools utopia logreq microtype setspace lineno preprint type1cm stringenc grffile infwarerr letltxmacro kvoptions stringenc listings xcolor oberdiek
+RUN tlmgr install biblatex biber wrapfig titlesec biblatex-science biblatex-nature mathtools utopia logreq microtype setspace lineno preprint type1cm stringenc grffile infwarerr letltxmacro kvoptions stringenc listings xcolor oberdiek tcolorbox pgf environ trimspaces parskip adjustbox collectbox
