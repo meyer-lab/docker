@@ -15,6 +15,8 @@ RUN apt-get update && apt -y --no-install-recommends full-upgrade && apt -y auto
 
 RUN apt-get install -y --no-install-recommends git-lfs python3 python3-pip python3-dev git bash openssl make fontconfig aspell aspell-en ruby ghostscript curl graphviz libfreetype6-dev pkg-config ttf-dejavu libxslt-dev libxml2-dev libhdf5-dev libzmq3-dev ruby-dev python3-setuptools cmake g++ gcc libopenblas-dev libeigen3-dev gfortran librsvg2-bin libcppunit-dev libqt5widgets5 libatomic1
 
+RUN apt-get install -y texlive-full
+
 # Jekyll, python3 and font things
 RUN gem install bundler --no-document && \
     pip3 install --no-cache-dir --upgrade pip pandocfilters pandoc-mustache virtualenv
@@ -52,8 +54,3 @@ RUN ldconfig
 
 USER jenkins
 WORKDIR /home/jenkins/
-
-RUN wget  -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
-ENV PATH="/home/jenkins/.TinyTeX/bin/x86_64-linux:${PATH}"
-
-RUN tlmgr install biblatex biber wrapfig titlesec biblatex-science biblatex-nature mathtools utopia logreq microtype setspace lineno preprint type1cm stringenc grffile infwarerr letltxmacro kvoptions stringenc listings xcolor oberdiek tcolorbox pgf environ trimspaces parskip adjustbox collectbox
