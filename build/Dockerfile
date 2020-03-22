@@ -46,8 +46,8 @@ RUN wget --quiet https://github.com/lierdakil/pandoc-crossref/releases/download/
     rm /*.tar.gz
 
 # Install julia
-RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.3/julia-1.3.1-linux-x86_64.tar.gz && \
-    tar -C /usr/ --strip 1 -xf julia-1.3.1-linux-x86_64.tar.gz && \
+RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.0-linux-x86_64.tar.gz && \
+    tar -C /usr/ --strip 1 -xf julia-1.4.0-linux-x86_64.tar.gz && \
     rm /*.tar.gz
 
 RUN ldconfig
