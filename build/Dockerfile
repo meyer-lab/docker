@@ -4,8 +4,8 @@ MAINTAINER Aaron S Meyer
 USER root
 
 # Prevent us constantly downloading these
-RUN wget --quiet https://computation.llnl.gov/projects/sundials/download/sundials-5.1.0.tar.gz && \
-    tar -xf sundials-5.1.0.tar.gz && \
+RUN wget --quiet https://computing.llnl.gov/projects/sundials/download/sundials-5.2.0.tar.gz && \
+    tar -xf sundials-5.2.0.tar.gz && \
     wget --quiet http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
@@ -22,9 +22,9 @@ RUN gem install bundler --no-document && \
     pip3 install --no-cache-dir --upgrade pip pandocfilters pandoc-mustache virtualenv
 
 # Build sundials
-WORKDIR /home/jenkins/sundials-5.1.0
+WORKDIR /home/jenkins/sundials-5.2.0
 RUN mkdir -p build
-WORKDIR /home/jenkins/sundials-5.1.0/build
+WORKDIR /home/jenkins/sundials-5.2.0/build
 RUN cmake .. -DBUILD_SHARED_LIBS=ON \
 	-DBUILD_ARKODE=OFF -DBUILD_IDAS=OFF -DBUILD_KINSOL=OFF -DBUILD_IDA=OFF \
 	-DCMAKE_C_FLAGS="-Ofast" -DEXAMPLES_ENABLE_C=OFF \
