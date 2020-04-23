@@ -39,15 +39,15 @@ WORKDIR /
 RUN rm -rf /home/jenkins/adept* /home/jenkins/sundials*
 
 # Install Pandoc
-RUN wget --quiet https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.6.2/linux-pandoc_2_9_2.tar.gz && \
-    wget --quiet https://github.com/jgm/pandoc/releases/download/2.9.2/pandoc-2.9.2-linux-amd64.tar.gz && \
-    tar -C /usr/bin -xf linux-pandoc_2_9_2.tar.gz && \
-    tar -C /usr --strip 1 -xf pandoc-2.9.2-linux-amd64.tar.gz && \
+RUN wget --quiet https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.6.2a/pandoc-crossref-Linux-2.9.2.1.tar.xz && \
+    wget --quiet https://github.com/jgm/pandoc/releases/download/2.9.2.1/pandoc-2.9.2.1-linux-amd64.tar.gz && \
+    tar -C /usr/bin -xf pandoc-crossref-Linux-2.9.2.1.tar.xz && \
+    tar -C /usr --strip 1 -xf pandoc-2.9.2.1-linux-amd64.tar.gz && \
     rm /*.tar.gz
 
 # Install julia
-RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.0-linux-x86_64.tar.gz && \
-    tar -C /usr/ --strip 1 -xf julia-1.4.0-linux-x86_64.tar.gz && \
+RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.1-linux-x86_64.tar.gz && \
+    tar -C /usr/ --strip 1 -xf julia-1.4.1-linux-x86_64.tar.gz && \
     rm /*.tar.gz
 
 RUN ldconfig
