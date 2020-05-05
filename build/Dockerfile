@@ -9,7 +9,7 @@ RUN wget --quiet https://computing.llnl.gov/projects/sundials/download/sundials-
     wget --quiet http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
-RUN sed -i 's/stretch/buster/g' /etc/apt/sources.list
+RUN sed -i 's/buster/bullseye/g' /etc/apt/sources.list
 
 RUN apt-get update && apt -y --no-install-recommends full-upgrade && apt -y autoremove
 
