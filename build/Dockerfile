@@ -9,8 +9,6 @@ RUN wget --quiet https://computing.llnl.gov/projects/sundials/download/sundials-
     wget --quiet http://www.met.reading.ac.uk/clouds/adept/adept-2.0.5.tar.gz && \
     tar -xf adept-2.0.5.tar.gz
 
-RUN sed -i 's/buster/bullseye/g' /etc/apt/sources.list
-
 RUN apt-get update && apt -y --no-install-recommends full-upgrade && apt -y autoremove
 
 RUN apt-get install -y --no-install-recommends git-lfs python3 python3-pip python3-dev git bash openssl make fontconfig aspell aspell-en ruby ghostscript curl graphviz libfreetype6-dev pkg-config ttf-dejavu libxslt-dev libxml2-dev libhdf5-dev libzmq3-dev ruby-dev python3-setuptools cmake g++ gcc libopenblas-dev libeigen3-dev gfortran librsvg2-bin libcppunit-dev libqt5widgets5 libatomic1 libblas-dev liblapack-dev libatlas-base-dev
