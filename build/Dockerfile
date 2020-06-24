@@ -10,6 +10,7 @@ RUN wget --quiet https://computing.llnl.gov/projects/sundials/download/sundials-
     tar -xf adept-2.0.5.tar.gz
 
 RUN sed -i 's/main/main contrib/g' /etc/apt/sources.list
+RUN sed -i 's/buster/bullseye/g' /etc/apt/sources.list
 
 RUN apt-get update && apt -y --no-install-recommends full-upgrade && apt -y autoremove
 
